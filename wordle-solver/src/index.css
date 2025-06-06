@@ -30,11 +30,16 @@ h1 {
   line-height: 1.1;
 }
 
+.page-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 .wordle-main-container {
   min-height: 100vh;
   max-width: 600px;
   text-align: center;
-  margin: 0 auto;
   display: flex;
   border: 1px solid rgba(var(--pink), 1);
   flex-direction: column;
@@ -92,4 +97,30 @@ h1 {
 .wordle-bg-grey {
   background-color: rgba(var(--dark-grey), 1);
   border-color: rgba(var(--very-light-grey), 1);
+}
+
+
+.strategy-sidebar {
+  width: 30%;
+  padding: 1rem;
+  background-color: rgba(var(--very-dark-grey), 1);
+  border: 1px solid rgba(var(--very-light-grey), 1);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  align-self: center;
+}
+.strategy-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: rgba(var(--pink), 1);
+}
+.strategy-section {
+  margin-bottom: 0.75rem;
+}
+.strategy-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: rgba(var(--pink), 1);
+  margin-right: 0.25rem;
 }
