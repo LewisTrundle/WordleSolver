@@ -6,11 +6,49 @@ export type SimulationParams = {
   startWord: string;
 };
 
+export type SimulationWordHistory = {
+  guess: string;
+  feedback: string;
+  guessNo: number;
+  strategyScore?: number;
+  topCandidates?: { word: string; score?: number }[];
+  possibleWordsCount?: number;
+};
+
+export type SimulationWordDetail = {
+  answer: string;
+  guesses: number;
+  timeTakenMs: number;
+  solved: boolean;
+  history: SimulationWordHistory[];
+};
+
 export type SimulationResult = {
-  avgGuesses: number;
-  maxGuesses: number;
-  totalTimeMs: number;
-  totalWords: number;
+  summary: {
+    strategy: string;
+    startWord: string;
+    hardMode: boolean;
+  };
+  stats: {
+    guesses: {
+      totalGuesses: number;
+      avgGuesses: number;
+      maxGuesses: number;
+      minGuesses: number;
+    };
+    time: {
+      slowestTime: number;
+      fastestTime: number;
+      totalTime: number;
+      avgTime: number;
+    };
+    words: {
+      totalWords: number;
+      unsolvedWords: string[];
+    };
+    distribution: Record<string, number>;
+  };
+  details: SimulationWordDetail[];
 };
 
 export async function runSimulation({
@@ -23,5 +61,6 @@ export async function runSimulation({
     hardMode,
     startWord
   });
+  console.log("Simulation result:", res.data);
   return res.data;
 }
