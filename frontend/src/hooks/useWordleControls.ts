@@ -9,7 +9,7 @@ export function useWordleControls() {
   const [level, setLevel] = useState<number>(1);
   const [hardMode, setHardMode] = useState<boolean>(false);
   const [customWord, setCustomWord] = useState<string>('');
-  const [startWord, setStartWord] = useState<string>('');
+  const [startWord, setStartWord] = useState<string>('salet');
   const [simResult, setSimResult] = useState<SimulationResult | null>(null);
   const [simRunning, setSimRunning] = useState<boolean>(false);
 

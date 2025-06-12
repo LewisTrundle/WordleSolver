@@ -3,12 +3,12 @@ from utils.filter import (
     get_filtered_words_from_data,
     get_feedback_pattern
 )
-import random
+from services.filter_strategy import filter_strategy
 from services.entropy_strategy import best_guess_entropy as entropy_strategy
 from services.frequency_strategy import best_guess_frequency as frequency_strategy
 from services.partition_strategy import best_guess_partition as partition_strategy
 from services.minimax_strategy import best_guess_minimax as minimax_strategy
-from services.random_word_service import get_random_word
+from services.random_word import get_random_word
 from services.simulate import simulate_wordle_service
 
 wordle_bp = Blueprint('wordle', __name__)
@@ -22,14 +22,25 @@ def random_word():
 def filter_words():
     data = request.get_json(silent=True)
     possible_words = get_filtered_words_from_data(data)
-    return jsonify({"possible_words": possible_words, "best_guess": random.choice(possible_words)})
+    result = filter_strategy(possible_words)
+    return jsonify(result)
 
 
 @wordle_bp.route('/entropy', methods=['POST'])
 def best_guess_entropy():
-    data = request.get_json(silent=True)
-    possible_words = get_filtered_words_from_data(data)
-    result = entropy_strategy(possible_words)
+    data = request.get_json(silent=True) or {}
+    history = data.get('history', [])
+    sort = bool(data.get('sort', True))
+    parallel = bool(data.get('parallel', False))
+    result = entropy_strategy(sort, parallel, history)
+    #possible_answers = get_filtered_words_from_data(data)
+    #from utils.word_list_loader import ALLOWED_GUESSES
+    #all_allowed_guesses = list(ALLOWED_GUESSES)
+    #result = entropy_strategy(possible_answers,
+    #    all_allowed_guesses=all_allowed_guesses,
+    #    sort=sort,
+    #    parallel=parallel
+    #)
     return jsonify(result)
 
 
@@ -63,6 +74,7 @@ def simulate_wordle():
     result = simulate_wordle_service(
         strategy=data.get('strategy', 'filter'),
         hard_mode=bool(data.get('hardMode', False)),
-        start_word=str(data.get('startWord', 'slate')).lower()
+        start_word=str(data.get('startWord', 'slate')).lower(),
+        stop_requested=bool(data.get('stopRequested', False))
     )
     return jsonify(result)

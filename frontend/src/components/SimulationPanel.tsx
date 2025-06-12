@@ -1,11 +1,13 @@
 import React from 'react';
 import type { SimulationResult } from '../services/simulation';
 
-interface SimulationPanelProps {
+export interface SimulationPanelProps {
   simRunning?: boolean;
   simResult?: SimulationResult | null;
   startWord: string;
   runSimulationHandler: () => void;
+  stopSimulationHandler?: () => void;
+  stopRequested?: boolean;
 }
 
 export const SimulationPanel: React.FC<SimulationPanelProps> = ({
@@ -13,15 +15,26 @@ export const SimulationPanel: React.FC<SimulationPanelProps> = ({
   simResult,
   startWord,
   runSimulationHandler,
+  stopSimulationHandler,
+  stopRequested,
 }) => (
   <div className="flex flex-col gap-2 items-center mt-2 w-full">
-    <button
-      className="mt-2 px-4 py-2 rounded bg-pink-700 text-white font-semibold hover:bg-pink-800 transition disabled:opacity-50"
-      onClick={runSimulationHandler}
-      disabled={simRunning || startWord.length !== 5}
-    >
-      {simRunning ? 'Running...' : 'Run Simulation'}
-    </button>
+    <div className="flex gap-2 w-full justify-center">
+      <button
+        className="mt-2 px-4 py-2 rounded bg-pink-700 text-white font-semibold hover:bg-pink-800 transition disabled:opacity-50"
+        onClick={runSimulationHandler}
+        disabled={simRunning || startWord.length !== 5}
+      >
+        {simRunning ? 'Running...' : 'Run Simulation'}
+      </button>
+      <button
+        className="mt-2 px-4 py-2 rounded bg-gray-600 text-white font-semibold hover:bg-gray-700 transition disabled:opacity-50"
+        onClick={stopSimulationHandler}
+        disabled={!simRunning}
+      >
+        Stop
+      </button>
+    </div>
     {simResult && (
       <div className="mt-2 p-2 bg-gray-800 text-white rounded text-xs w-full">
         <div><strong>Simulation Results</strong></div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useWordleControls } from './hooks/useWordleControls';
 import { StrategySidebar } from './components/StrategySidebar';
 import { runSimulation } from './services/simulation';
@@ -13,6 +14,7 @@ function App() {
   async function runSimulationHandler() {
     setControls.setSimRunning?.(true);
     setControls.setSimResult?.(null);
+    setStopRequested(false);
     try {
       const strategy =
         level === 2 ? 'entropy' :
@@ -34,6 +36,16 @@ function App() {
     }
   }
 
+  // --- Stop Simulation State ---
+  const [stopRequested, setStopRequested] = React.useState(false);
+  const stopRequestedRef = React.useRef(stopRequested);
+  React.useEffect(() => { stopRequestedRef.current = stopRequested; }, [stopRequested]);
+
+  function stopSimulationHandler() {
+    setStopRequested(true);
+    setControls.setSimRunning?.(false);
+  }
+
   return (
     <div className="page-container">
       <div className="wordle-main-container flex-1">
@@ -48,6 +60,8 @@ function App() {
             simResult={simResult}
             startWord={startWord}
             runSimulationHandler={runSimulationHandler}
+            stopSimulationHandler={stopSimulationHandler}
+            stopRequested={stopRequested}
           />
         )}
         {mode !== 'simulation' && (

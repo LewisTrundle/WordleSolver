@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from wordle_guesser import score_words_by_entropy, WORD_LIST
+from wordle_guesser import score_words_by_entropy, ANSWER_LIST
 
 def plot_entropy_distribution(possible_words):
     scored = score_words_by_entropy(possible_words)
@@ -14,4 +14,4 @@ def plot_entropy_distribution(possible_words):
     plt.show()
 
 if __name__ == "__main__":
-    plot_entropy_distribution(WORD_LIST)
+    plot_entropy_distribution(ANSWER_LIST)
