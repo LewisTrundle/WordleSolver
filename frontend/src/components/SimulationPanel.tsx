@@ -6,17 +6,13 @@ export interface SimulationPanelProps {
   simResult?: SimulationResult | null;
   startWord: string;
   runSimulationHandler: () => void;
-  stopSimulationHandler?: () => void;
-  stopRequested?: boolean;
 }
 
 export const SimulationPanel: React.FC<SimulationPanelProps> = ({
   simRunning,
   simResult,
   startWord,
-  runSimulationHandler,
-  stopSimulationHandler,
-  stopRequested,
+  runSimulationHandler
 }) => (
   <div className="flex flex-col gap-2 items-center mt-2 w-full">
     <div className="flex gap-2 w-full justify-center">
@@ -29,7 +25,7 @@ export const SimulationPanel: React.FC<SimulationPanelProps> = ({
       </button>
       <button
         className="mt-2 px-4 py-2 rounded bg-gray-600 text-white font-semibold hover:bg-gray-700 transition disabled:opacity-50"
-        onClick={stopSimulationHandler}
+        onClick={() => console.log('Stop Simulation')}
         disabled={!simRunning}
       >
         Stop

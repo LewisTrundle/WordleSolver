@@ -1,6 +1,7 @@
 import { WordleGrid } from './WordleGrid';
 import { useWordleGame } from '../hooks/useWordleGame';
 import { usePossibleWords } from '../hooks/usePossibleWords';
+import { GameOverModal } from './GameOverModal';
 
 type GameBoardProps = {
   answer: string;
@@ -8,13 +9,30 @@ type GameBoardProps = {
 };
 
 export const GameBoard = ({ answer, level }: GameBoardProps) => {
-  const { guess, feedback, history, revealing, showAnswer, toggleShowAnswer } = useWordleGame(answer);
+  const { guess, feedback, history, revealing, showAnswer, toggleShowAnswer, setGameState } = useWordleGame(answer);
   const { possibleWords, bestGuess } = usePossibleWords(history, level);
 
   // Calculate the top offset for the tooltip (align with current row)
   const rowHeight = 48;
   const currentRowIdx = revealing ? history.length : history.length;
   const tooltipTop = rowHeight * currentRowIdx;
+
+  // Game over logic
+  const lastEntry = history[history.length - 1];
+  const isWin = lastEntry && lastEntry.feedback === 'ggggg';
+  const isLose = history.length === 6 && !isWin;
+  const isGameOver = isWin || isLose;
+
+  const handleRestart = () => {
+    setGameState(s => ({
+      ...s,
+      guess: '',
+      feedback: ['.', '.', '.', '.', '.'],
+      history: [],
+      revealing: null,
+      showAnswer: false,
+    }));
+  };
 
   return (
     <>
@@ -48,6 +66,12 @@ export const GameBoard = ({ answer, level }: GameBoardProps) => {
             </div>
           </div>
         )}
+        <GameOverModal
+          isOpen={isGameOver}
+          won={!!isWin}
+          guessCount={isWin ? history.length : 0}
+          onRestart={handleRestart}
+        />
       </div>
     </>
   );

@@ -124,3 +124,100 @@ h1 {
   color: rgba(var(--pink), 1);
   margin-right: 0.25rem;
 }
+
+/* Game Over Modal Styles */
+.gameover-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gameover-modal {
+  background: #18181b;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 2rem 2.5rem;
+  min-width: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  text-align: center;
+}
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+.modal-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.modal-stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.modal-stat-label {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+.modal-guess-dist {
+  margin-bottom: 1.5rem;
+}
+.modal-guess-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.modal-guess-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.modal-guess-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.modal-guess-bar-label {
+  width: 1.2rem;
+  text-align: right;
+  font-weight: bold;
+}
+.modal-guess-bar {
+  flex: 1;
+  background: #27272a;
+  color: #fff;
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  text-align: left;
+  font-size: 1rem;
+  min-width: 2rem;
+}
+.modal-guess-bar-active {
+  background: #16A34A;
+  color: #fff;
+}
+.modal-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.modal-btn {
+  padding: 0.7rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modal-btn-play {
+  background: #22c55e;
+  color: #fff;
+}
+.modal-btn-play:hover {
+  background: #16A34A;
+}
