@@ -4,7 +4,7 @@ from utils.filter import (
     get_feedback_pattern
 )
 from services.filter_strategy import filter_strategy
-from services.entropy_strategy import best_guess_entropy as entropy_strategy
+from backend.services.strategy_entrypoint import strategy_entrypoint as entropy_strategy
 from services.frequency_strategy import best_guess_frequency as frequency_strategy
 from services.partition_strategy import best_guess_partition as partition_strategy
 from services.minimax_strategy import best_guess_minimax as minimax_strategy
@@ -32,15 +32,7 @@ def best_guess_entropy():
     history = data.get('history', [])
     sort = bool(data.get('sort', True))
     parallel = bool(data.get('parallel', False))
-    result = entropy_strategy(sort, parallel, history)
-    #possible_answers = get_filtered_words_from_data(data)
-    #from utils.word_list_loader import ALLOWED_GUESSES
-    #all_allowed_guesses = list(ALLOWED_GUESSES)
-    #result = entropy_strategy(possible_answers,
-    #    all_allowed_guesses=all_allowed_guesses,
-    #    sort=sort,
-    #    parallel=parallel
-    #)
+    result = entropy_strategy(history=history, sort=sort, parallel=parallel)
     return jsonify(result)
 
 
